@@ -1,0 +1,32 @@
+﻿@page
+@using Microsoft.Data.SqlClient;
+
+@{
+    try
+    {
+        String emailid = Request.Query["emailid"];
+
+        String connectionString = "Server=tcp:bumailsystem.database.windows.net,1433;Initial Catalog=bumailsystem;Persist Security Info=False;User ID=bumailsystem;Password=@bumail1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            String sql = "DELETE FROM emails WHERE  emailid=@emailid";
+            using (SqlConnection command = new SqlConnection(connectionString))
+            {
+                command.Parameter.AddWidthValue("@emailid", emailid);
+
+                command.ExcuteNonQuery();
+
+            }
+
+        }
+
+    }
+    catch (Exception ex)
+    {
+
+    }
+
+    Response.Redirect("/Index");
+
+}
