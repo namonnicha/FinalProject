@@ -6,8 +6,7 @@
     {
         string emailid = Request.Query["emailid"];
 
-        // Always sanitize and validate user inputs to prevent SQL injection
-        // Consider using parameterized queries or stored procedures to mitigate SQL injection
+       
         string connectionString = "Server=tcp:bumailsystem.database.windows.net,1433;Initial Catalog=bumailsystem;Persist Security Info=False;User ID=bumailsystem;Password=@bumail1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
@@ -15,31 +14,30 @@
             string sql = "DELETE FROM emails WHERE emailid = @EmailID";
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
-                // Add parameter to prevent SQL injection
+                
                 command.Parameters.AddWithValue("@EmailID", emailid);
 
-                // Execute the SQL command
+               
                 int rowsAffected = command.ExecuteNonQuery();
 
-                // Check if deletion was successful or handle the result accordingly
+                
                 if (rowsAffected > 0)
                 {
-                    // Deletion successful
+                    
                 }
                 else
                 {
-                    // No rows deleted, handle this case
+                   
                 }
             }
         }
     }
     catch (Exception ex)
     {
-        // Handle exceptions appropriately, like logging or displaying an error message
-        // Logging the exception or displaying an error message can help in debugging
+      
     }
 
-    // Redirect after the operation is done (whether it succeeded or failed)
+   
     Response.Redirect("/Index");
 
 
